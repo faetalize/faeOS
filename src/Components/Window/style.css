@@ -1,0 +1,46 @@
+.titlebar{
+    display:flex;
+    padding: 0.5rem;
+    backdrop-filter: blur(24px);
+    background-color: rgba(255, 255, 255, 0.747);
+    align-items: center;
+}
+
+.titlebar-buttons{
+    margin-left: auto;
+    display:flex;
+    gap: 10px;
+}
+
+.titlebar-buttons>button{
+    padding:0;
+    border:none;
+    height:12px;
+    width: 12px;
+    border-radius: 12px;
+}
+
+.titlebar-buttons>.maximize{
+    background-color: rgb(66, 219, 66);
+}
+
+.titlebar-buttons>.minimize{
+    background-color: rgb(255, 225, 53);
+}
+
+.titlebar-buttons>.close{
+    background-color: rgb(238, 46, 46);
+}
+
+.window{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    resize: both;
+    overflow: auto;
+}
+
+.window-content{
+    background-color: rgb(216, 216, 216);
+    flex-grow: 1;
+}

@@ -1,0 +1,9 @@
+.browser-view {
+    flex-grow: 1;
+}
+
+.browser {
+    height:100%;
+    display: flex;
+    flex-direction: column
+}
