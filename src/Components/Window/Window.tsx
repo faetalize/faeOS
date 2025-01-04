@@ -2,63 +2,73 @@ import { ReactNode, useEffect, useRef, useState } from 'react'
 import './style.css'
 import Titlebar from './Titlebar';
 
-const Window = ({ children, useClientSideDecorations }: { children: ReactNode, useClientSideDecorations: boolean }) => {
-    const [csd] = useState(useClientSideDecorations);
-    const [isDragging, setIsDragging] = useState(false);
-    const [position, setPosition] = useState({ x: 0, y: 0 });
+interface WindowProps {
+    children?: ReactNode,
+    useClientsideDecorations: boolean,
+    title: string
+}
+
+const Window = ({ children, useClientsideDecorations: csd, title }: WindowProps) => {
+    const isDragging = useRef(false);
     const offset = useRef({ x: 0, y: 0 });
-    const window = useRef<HTMLDivElement>(null);
+    const windowRef = useRef<HTMLDivElement>(null);
+    const [x, setX] = useState(0);
+    const [y, setY] = useState(0);
 
-
-    function handleMouseDown(e: React.MouseEvent) {
-        setIsDragging(true);
+    const handleMouseDown = (e: React.MouseEvent) => {
+        const target = e.target as HTMLElement;
+        if (target.classList.contains('window-resize-area')) {
+            return; // Do not initiate drag if the target is a resize handle
+        }
+        isDragging.current = true;
         offset.current = {
-            x: e.clientX - position.x,
-            y: e.clientY - position.y
+            x: e.clientX - x,
+            y: e.clientY - y
         }
     }
 
     const handleMouseMove = (e: MouseEvent) => {
-        if (isDragging) {
-            setPosition({
-                x: e.clientX - offset.current.x,
-                y: e.clientY - offset.current.y,
-            });
+        if (isDragging.current) {
+            setX(Math.max(0, e.clientX - offset.current.x));
+            setY(Math.max(0, e.clientY - offset.current.y));
         }
     };
 
-    function handleMouseUp() {
-        setIsDragging(false);
+    const handleMouseUp = () => {
+        isDragging.current = false;
     }
 
     useEffect(() => {
-        const debouncedHandleMouseMove = (e: MouseEvent) => {
-            if (isDragging) {
-                requestAnimationFrame(() => handleMouseMove(e));
-            }
-        };
-        document.addEventListener('mousemove', debouncedHandleMouseMove);
-        document.addEventListener('mouseup', handleMouseUp);
-
-        return () => {
-            document.removeEventListener('mousemove', debouncedHandleMouseMove);
-            document.removeEventListener('mouseup', handleMouseUp);
-        };
-    }, [isDragging]);
+        if (windowRef.current) {
+            windowRef.current.style.left = `${x}px`;
+            windowRef.current.style.top = `${y}px`;
+        }
+    }, [x, y]);
 
     useEffect(() => {
-        if (window.current) {
-            window.current.style.left = `${position.x}px`;
-            window.current.style.top = `${position.y}px`;
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseup', handleMouseUp);
+        return () => {
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseup', handleMouseUp)
         }
-    }, [position]);
+    }, [isDragging, handleMouseMove, handleMouseUp]);
 
     return (
-        <div className="window" ref={window}>
-            {!csd ? <Titlebar onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}></Titlebar> : null}
-            <div className="window-content">
+        //we add the event on the container to support CSD
+        <div className="window" ref={windowRef} onMouseDown={handleMouseDown}>
+            {!csd && <Titlebar title={title} />}
+            <div className="window-content" onMouseDown={(e) => e.stopPropagation()}>
                 {children}
             </div>
+            <div className="resize-handle resize-handle-left" />
+            <div className="resize-handle resize-handle-top" />
+            <div className="resize-handle resize-handle-right" />
+            <div className="resize-handle resize-handle-bottom" />
+            <div className="resize-handle resize-handle-corner-ne" />
+            <div className="resize-handle resize-handle-corner-nw" />
+            <div className="resize-handle resize-handle-corner-se" />
+            <div className="resize-handle resize-handle-corner-sw" />
         </div>
     )
 }
