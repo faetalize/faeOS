@@ -1,9 +1,8 @@
 .titlebar{
     display:flex;
     padding: 0.5rem;
-    backdrop-filter: blur(24px);
-    background-color: rgba(255, 255, 255, 0.747);
     align-items: center;
+    justify-content: center;
 }
 
 .titlebar-buttons{
@@ -34,15 +33,19 @@
 
 .window{
     display: flex;
+    backdrop-filter: blur(24px);
+    background-color: rgba(255, 255, 255, 0.747);
     flex-direction: column;
     border: 1px solid black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow:hidden;
     min-height: 250px;
     min-width: 250px;
+    height: 250px;
+    width: 250px;
 }
 
 .window-content{
-    background-color: rgb(216, 216, 216);
     flex-grow: 1;
 }
 
@@ -53,11 +56,10 @@
 
 .resize-handle {
     position: absolute;
-    background: red;
     z-index: 10;
 }
 
-.resize-handle-right {
+.resize-handle-e {
     top: 0;
     right: 0;
     width: 5px;
@@ -65,7 +67,7 @@
     cursor: ew-resize;
 }
 
-.resize-handle-bottom {
+.resize-handle-s {
     bottom: 0;
     left: 0;
     width: 100%;
@@ -73,7 +75,7 @@
     cursor: ns-resize;
 }
 
-.resize-handle-left {
+.resize-handle-w {
     top: 0;
     left: 0;
     width: 5px;
@@ -81,7 +83,7 @@
     cursor: ew-resize;
 }
 
-.resize-handle-top {
+.resize-handle-n {
     top: 0;
     left: 0;
     width: 100%;
@@ -89,8 +91,7 @@
     cursor: ns-resize;
 }
 
-.resize-handle-corner-se {
-    background-color: green;
+.resize-handle-se {
     bottom: 0;
     right: 0;
     width: 5px;
@@ -98,8 +99,7 @@
     cursor: nwse-resize;
 }
 
-.resize-handle-corner-ne {
-    background-color: green;
+.resize-handle-ne {
     top: 0;
     right: 0;
     width: 5px;
@@ -107,8 +107,7 @@
     cursor: nesw-resize;
 }
 
-.resize-handle-corner-sw {
-    background-color: green;
+.resize-handle-sw {
     bottom: 0;
     left: 0;
     width: 5px;
@@ -116,11 +115,14 @@
     cursor: nesw-resize
 }
 
-.resize-handle-corner-nw {
-    background-color: green;
+.resize-handle-nw {
     top: 0;
     left: 0;
     width: 5px;
     height: 5px;
     cursor: nwse-resize;
+}
+
+.dragging iframe{
+    pointer-events: none;
 }
