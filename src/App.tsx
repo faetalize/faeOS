@@ -1,15 +1,14 @@
 import Browser from './Components/Browser/Browser';
-import Window from './Components/Window/Window'
 import DesktopEnvironment from './Components/Desktop Environment/DesktopEnvironment';
+import ComponentPlayground from './Components/Component Playground/ComponentPlayground';
+import 'overlayscrollbars/overlayscrollbars.css';
 
 function App() {
   return (
     <>
       <DesktopEnvironment>
         <Browser></Browser>
-        <Browser></Browser>
-        <Browser></Browser>
-        <Window useClientsideDecorations={true} title="Empty Window"></Window>
+        <ComponentPlayground></ComponentPlayground>
       </DesktopEnvironment>
     </>
   )

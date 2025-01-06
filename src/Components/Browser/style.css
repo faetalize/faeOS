@@ -1,5 +1,6 @@
 .browser-view {
     flex-grow: 1;
+    border:none;
 }
 
 .browser {

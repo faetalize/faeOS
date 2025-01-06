@@ -27,10 +27,10 @@ const Browser = () => {
     }, [url]);
 
     return (
-        <Window useClientsideDecorations = {false} title="Fæ Browser">
+        <Window useClientsideDecorations={false} title="Fæ Browser" fullHeightContent={true}>
             <div className="browser">
                 <Omnibox url={url} setUrl={setUrl}></Omnibox>
-                <iframe className="browser-view" ref={browserViewRef} sandbox="allow-forms allow-same-origin allow-scripts allow-top-navigation allow-popups-to-escape-sandbox allow-popups allow-modals allow-presentation"></iframe>
+                <iframe  className="browser-view"  ref={browserViewRef} sandbox="allow-forms allow-same-origin allow-scripts allow-top-navigation allow-popups-to-escape-sandbox allow-popups allow-modals allow-presentation"></iframe>
             </div>
         </Window>
     )

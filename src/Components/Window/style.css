@@ -32,21 +32,47 @@
 }
 
 .window{
-    display: flex;
-    backdrop-filter: blur(24px);
-    background-color: rgba(255, 255, 255, 0.747);
-    flex-direction: column;
-    border: 1px solid black;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow:hidden;
     min-height: 250px;
     min-width: 250px;
     height: 250px;
     width: 250px;
+    padding:5px;
+}
+
+.window-view{
+    display: flex;
+    flex-direction: column;
+    outline: 1px solid rgba(0, 0, 0, 0.267);
+    box-shadow: 0 0px 24px rgba(0, 0, 0, 0.39);
+    backdrop-filter: blur(24px);
+    background-color: rgba(255, 255, 255, 0.747);
+    border-radius: 8px;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
 }
 
 .window-content{
-    flex-grow: 1;
+    overflow: auto;
+}
+
+.window-content::-webkit-scrollbar{
+    width: 8px;
+}
+
+.window-content::-webkit-scrollbar-track{
+    margin-block: 4px;
+    background-color: transparent;
+}
+
+.window-content::-webkit-scrollbar-thumb{
+    background-color: rgba(92, 92, 92, 0.404);
+    border-radius: 100vw;
+    background-clip: border-box;
+}
+
+.window-content-fullheight{
+    height: 100%;
 }
 
 .window-resize-area{
@@ -61,14 +87,14 @@
 
 .resize-handle-e {
     top: 0;
-    right: 0;
+    right: 0px;
     width: 5px;
     height: 100%;
     cursor: ew-resize;
 }
 
 .resize-handle-s {
-    bottom: 0;
+    bottom: 0px;
     left: 0;
     width: 100%;
     height: 5px;
@@ -77,14 +103,14 @@
 
 .resize-handle-w {
     top: 0;
-    left: 0;
+    left: 0px;
     width: 5px;
     height: 100%;
     cursor: ew-resize;
 }
 
 .resize-handle-n {
-    top: 0;
+    top: 0px;
     left: 0;
     width: 100%;
     height: 5px;
@@ -92,32 +118,32 @@
 }
 
 .resize-handle-se {
-    bottom: 0;
-    right: 0;
+    bottom: 0px;
+    right: 0px;
     width: 5px;
     height: 5px;
     cursor: nwse-resize;
 }
 
 .resize-handle-ne {
-    top: 0;
-    right: 0;
+    top: 0px;
+    right: 0px;
     width: 5px;
     height: 5px;
     cursor: nesw-resize;
 }
 
 .resize-handle-sw {
-    bottom: 0;
-    left: 0;
+    bottom: 0px;
+    left: 0px;
     width: 5px;
     height: 5px;
     cursor: nesw-resize
 }
 
 .resize-handle-nw {
-    top: 0;
-    left: 0;
+    top: 0px;
+    left: 0px;
     width: 5px;
     height: 5px;
     cursor: nwse-resize;

@@ -21,6 +21,7 @@ const DesktopEnvironment = ({ children }: DEProps) => {
     }, [activeIndex])
 
     const handleMouseDown = (event: MouseEvent) => {
+        console.log("hi")
         const windows = desktopEnvironment.current!.querySelectorAll('.window');
         windows?.forEach((window, index) => {
             if (window.contains(event.target as HTMLDivElement)) {
@@ -30,7 +31,7 @@ const DesktopEnvironment = ({ children }: DEProps) => {
     }
 
     return (
-        <div className="desktop-environment" onMouseDown={handleMouseDown} ref={desktopEnvironment}>
+        <div className="desktop-environment" onMouseDownCapture={handleMouseDown} ref={desktopEnvironment}>
             <Toolbar />
             <div className="de-window-container">
                 {children}
