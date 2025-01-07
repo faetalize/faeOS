@@ -23,7 +23,8 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
     const [width, setWidth] = useState(300);
     const [height, setHeight] = useState(300);
 
-    const handleResize = (e: React.MouseEvent) => {
+    const handleResize = (e: React.MouseEvent|React.TouchEvent) => {
+        e.preventDefault();
         setIsResizing(true);
         //we handle the 8 possibilities for resizing, n e s w ne se nw sw
         const classList = (e.target as HTMLElement).classList;
@@ -38,16 +39,20 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
         }
     }
 
-    const handleMouseDown = (e: React.MouseEvent) => {
+    const handleMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
+        e.preventDefault();
         const target = e.target as HTMLElement;
         if (target.classList.contains('resize-handle')) {
             return; // Do not initiate drag if the target is a resize handle
         }
         setIsDragging(true);
 
+        const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+        const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+
         offset.current = {
-            x: e.clientX - x,
-            y: e.clientY - y
+            x: clientX - x,
+            y: clientY - y
         }
     }
 
@@ -57,24 +62,30 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
         resizeDirection.current = null;
     }, []);
 
-    const handleMouseMove = useCallback((e: MouseEvent) => {
+    const handleMouseMove = useCallback((e: MouseEvent | TouchEvent) => {
+        if (isDragging || resizeDirection.current) {
+            e.preventDefault();
+        }
+        const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+        const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+
         if (isDragging) {
-            setX(e.clientX - offset.current.x);
-            setY(Math.max(-RESIZE_HANDLE_PADDING, e.clientY - offset.current.y));
+            setX(clientX - offset.current.x);
+            setY(Math.max(-RESIZE_HANDLE_PADDING, clientY - offset.current.y));
         }
         if (resizeDirection.current) {
             //we need to take into account the DE's top bar in the y axis.
             //we need to take into account the resize handles' widths.
             switch (resizeDirection.current) {
                 case 'e':
-                    setWidth(e.clientX - x - RESIZE_HANDLE_PADDING);
+                    setWidth(clientX - x - RESIZE_HANDLE_PADDING);
                     break;
                 case 's':
-                    setHeight(e.clientY - DE_TOPBAR_HEIGHT - y - RESIZE_HANDLE_PADDING); 
+                    setHeight(clientY - DE_TOPBAR_HEIGHT - y - RESIZE_HANDLE_PADDING); 
                     break;
                 case 'se':
-                    setWidth(e.clientX - x - RESIZE_HANDLE_PADDING);
-                    setHeight(e.clientY - DE_TOPBAR_HEIGHT - y - RESIZE_HANDLE_PADDING);
+                    setWidth(clientX - x - RESIZE_HANDLE_PADDING);
+                    setHeight(clientY - DE_TOPBAR_HEIGHT - y - RESIZE_HANDLE_PADDING);
                     break;
                 default:
                     break;
@@ -85,9 +96,13 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
     useEffect(() => {
         document.addEventListener('mousemove', handleMouseMove);
         document.addEventListener('mouseup', handleMouseUp);
+        document.addEventListener('touchmove', handleMouseMove, {passive: false});
+        document.addEventListener('touchend', handleMouseUp);
         return () => {
             document.removeEventListener('mousemove', handleMouseMove);
-            document.removeEventListener('mouseup', handleMouseUp)
+            document.removeEventListener('mouseup', handleMouseUp);
+            document.removeEventListener('touchmove', handleMouseMove);
+            document.removeEventListener('touchend', handleMouseUp);
         }
     }, [handleMouseMove, handleMouseUp]);
 
@@ -98,7 +113,7 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
 
     return (
         //we add the event on the container to support CSD
-        <div className="window" ref={windowRef} onMouseDown={handleMouseDown} style={{ width: `${width}px`, height: `${height}px`, top: `${y}px`, left: `${x}px` }}>
+        <div className="window" ref={windowRef} onMouseDown={handleMouseDown} onTouchStart={handleMouseDown} style={{ width: `${width}px`, height: `${height}px`, top: `${y}px`, left: `${x}px` }}>
             <div className="window-view" >
                 {!csd && <Titlebar title={title} />}
                 <div
@@ -109,11 +124,19 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
                             if (!originator.classList.contains('dragarea')) {
                                 e.stopPropagation();
                             }
-                        }}>
+                        }}
+                    onTouchStart={
+                        (e: React.TouchEvent) => {
+                            const originator = e.target as HTMLElement
+                            if (!originator.classList.contains('dragarea')) {
+                                e.stopPropagation();
+                            }
+                        }}
+                >
                     {children}
                 </div>
             </div>
-            <div onMouseDown={handleResize}>
+            <div onMouseDown={handleResize} onTouchStart={handleResize}>
                 <div className="resize-handle resize-handle-w" />
                 <div className="resize-handle resize-handle-n" />
                 <div className="resize-handle resize-handle-e" />

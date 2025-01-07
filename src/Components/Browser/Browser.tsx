@@ -15,6 +15,10 @@ const Browser = () => {
             }
             const src = url;
             const response = await getMD(src);
+            if('error' in response){
+                browserViewRef.current!.srcdoc = response.message;
+                return;
+            }
             const markup = await response.text();
             const parser = new DOMParser();
             const targetdocument = parser.parseFromString(markup, 'text/html');
@@ -27,7 +31,7 @@ const Browser = () => {
     }, [url]);
 
     return (
-        <Window useClientsideDecorations={false} title="Fæ Browser" fullHeightContent={true}>
+        <Window useClientsideDecorations={false} title="Web Browser" fullHeightContent={true}>
             <div className="browser">
                 <Omnibox url={url} setUrl={setUrl}></Omnibox>
                 <iframe  className="browser-view"  ref={browserViewRef} sandbox="allow-forms allow-same-origin allow-scripts allow-top-navigation allow-popups-to-escape-sandbox allow-popups allow-modals allow-presentation"></iframe>
@@ -37,13 +41,19 @@ const Browser = () => {
 }
 
 async function getMD(src: string) {
-    return await fetch("http://localhost:3000/browser", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ src })
-    });
+    try {
+        return await fetch("http://localhost:3000/browser", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ src })
+        });
+    } catch (error) {
+        console.error("Fetch failed, is the backend running?", error);
+        return {message: "Not Found", error: error}
+    }
+    
 }
 
 export default Browser;

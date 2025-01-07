@@ -1,4 +1,4 @@
-import { ReactNode, useState, useEffect, MouseEvent, useRef } from 'react';
+import { ReactNode, useState, useEffect, useRef } from 'react';
 import './style.css';
 import Toolbar from './Toolbar';
 import Dock from './Dock';
@@ -20,8 +20,7 @@ const DesktopEnvironment = ({ children }: DEProps) => {
         }
     }, [activeIndex])
 
-    const handleMouseDown = (event: MouseEvent) => {
-        console.log("hi")
+    const handleMouseDown = (event: React.MouseEvent|React.TouchEvent) => {
         const windows = desktopEnvironment.current!.querySelectorAll('.window');
         windows?.forEach((window, index) => {
             if (window.contains(event.target as HTMLDivElement)) {
@@ -31,7 +30,7 @@ const DesktopEnvironment = ({ children }: DEProps) => {
     }
 
     return (
-        <div className="desktop-environment" onMouseDownCapture={handleMouseDown} ref={desktopEnvironment}>
+        <div className="desktop-environment" onTouchStartCapture={handleMouseDown} onMouseDownCapture={handleMouseDown} ref={desktopEnvironment}>
             <Toolbar />
             <div className="de-window-container">
                 {children}

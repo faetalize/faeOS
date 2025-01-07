@@ -1,8 +1,7 @@
 import Browser from './Components/Browser/Browser';
 import DesktopEnvironment from './Components/Desktop Environment/DesktopEnvironment';
 import ComponentPlayground from './Components/Component Playground/ComponentPlayground';
-import 'overlayscrollbars/overlayscrollbars.css';
-
+import './App.css'
 function App() {
   return (
     <>
