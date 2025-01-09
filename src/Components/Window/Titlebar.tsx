@@ -1,4 +1,4 @@
-import WindowControls from "../WindowControls/WindowControls"
+import WindowControls from "../SystemUI/WindowControls/WindowControls"
 
 interface TitlebarProps {
     title: string

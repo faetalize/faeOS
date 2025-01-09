@@ -9,10 +9,11 @@ interface WindowProps {
     children?: ReactNode,
     useClientsideDecorations: boolean,
     title: string,
-    fullHeightContent?: boolean
+    fullHeightContent?: boolean,
+    className?: string,
 }
 
-const Window = ({ children, useClientsideDecorations: csd, title, fullHeightContent = false }: WindowProps) => {
+const Window = ({ children, useClientsideDecorations: csd, title, fullHeightContent = false, className = ""}: WindowProps) => {
     const [isDragging, setIsDragging] = useState(false);
     const [isResizing, setIsResizing] = useState(false);
     const resizeDirection = useRef<string | null>(null);
@@ -20,10 +21,10 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
     const windowRef = useRef<HTMLDivElement>(null);
     const [x, setX] = useState(0);
     const [y, setY] = useState(0);
-    const [width, setWidth] = useState(300);
-    const [height, setHeight] = useState(300);
+    const [width, setWidth] = useState(500);
+    const [height, setHeight] = useState(400);
 
-    const handleResize = (e: React.MouseEvent|React.TouchEvent) => {
+    const handleResize = (e: React.MouseEvent | React.TouchEvent) => {
         e.preventDefault();
         setIsResizing(true);
         //we handle the 8 possibilities for resizing, n e s w ne se nw sw
@@ -81,7 +82,7 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
                     setWidth(clientX - x - RESIZE_HANDLE_PADDING);
                     break;
                 case 's':
-                    setHeight(clientY - DE_TOPBAR_HEIGHT - y - RESIZE_HANDLE_PADDING); 
+                    setHeight(clientY - DE_TOPBAR_HEIGHT - y - RESIZE_HANDLE_PADDING);
                     break;
                 case 'se':
                     setWidth(clientX - x - RESIZE_HANDLE_PADDING);
@@ -96,7 +97,7 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
     useEffect(() => {
         document.addEventListener('mousemove', handleMouseMove);
         document.addEventListener('mouseup', handleMouseUp);
-        document.addEventListener('touchmove', handleMouseMove, {passive: false});
+        document.addEventListener('touchmove', handleMouseMove, { passive: false });
         document.addEventListener('touchend', handleMouseUp);
         return () => {
             document.removeEventListener('mousemove', handleMouseMove);
@@ -114,8 +115,8 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
     return (
         //we add the event on the container to support CSD
         <div className="window" ref={windowRef} onMouseDown={handleMouseDown} onTouchStart={handleMouseDown} style={{ width: `${width}px`, height: `${height}px`, top: `${y}px`, left: `${x}px` }}>
-            <div className="window-view" >
-                {!csd && <Titlebar title={title} />}
+            <div className={className + " window-view"}>
+                {!csd  && <Titlebar title={title} />}
                 <div
                     className={`window-content ${fullHeightContent ? 'window-content-fullheight' : ''}`}
                     onMouseDown={

@@ -1,23 +1,21 @@
-.titlebar{
-    display:flex;
+.titlebar {
+    display: flex;
     padding: 0.5rem;
     align-items: center;
     justify-content: center;
 }
 
-.titlebar .window-controls{
+.titlebar .window-controls {
     margin-left: auto;
 }
 
-.window{
-    min-height: 250px;
-    min-width: 250px;
-    height: 250px;
-    width: 250px;
-    padding:5px;
+.window {
+    min-height: 400px;
+    min-width: 500px;
+    padding: 5px;
 }
 
-.window-view{
+.window-view {
     display: flex;
     flex-direction: column;
     outline: 1px solid rgba(0, 0, 0, 0.267);
@@ -29,26 +27,26 @@
     height: 100%;
     width: 100%;
     transition: filter 0.2s, background-color 0.2s, backdrop-filter 0.2s;
-    filter:brightness(0.85);
+    filter: brightness(0.85);
 }
 
-.window.active .window-view{
+.window.active .window-view {
     backdrop-filter: blur(42px);
-    background-color: rgba(236, 236, 236, 0.846);
-    filter:brightness(1);
+    background-color: rgba(252, 252, 252, 0.846);
+    filter: brightness(1);
 }
 
-.window-content{
-    height:100%;
+.window-content {
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
 }
 
-
-
-.window-content-fullheight{
+.window-content-fullheight {
     height: 100%;
 }
 
-.window-resize-area{
+.window-resize-area {
     padding: 1rem;
     background-color: rgba(240, 248, 255, 0.301);
 }
@@ -115,19 +113,20 @@
 }
 
 .resize-handle-se,
-    .resize-handle-ne,
-    .resize-handle-sw,
-    .resize-handle-nw {
-        width: 10px;
-        height: 10px;
-    }
+.resize-handle-ne,
+.resize-handle-sw,
+.resize-handle-nw {
+    width: 10px;
+    height: 10px;
+}
 
-:has(.dragging) iframe{
+:has(.dragging) iframe {
     pointer-events: none;
 }
 
 /* Increase touch target size for resize handles on mobile */
 @media (max-width: 768px) {
+
     .resize-handle-se,
     .resize-handle-ne,
     .resize-handle-sw,

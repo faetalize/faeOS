@@ -1,0 +1,8 @@
+.fill{
+    background-color: rgb(250, 250, 250) !important;
+}
+
+.content{
+    overflow: auto;
+    flex-grow: 1;
+}

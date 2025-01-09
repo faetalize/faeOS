@@ -1,7 +1,7 @@
 import Omnibox from "./Omnibox";
 import { useEffect, useRef, useState } from 'react';
 import './style.css'
-import Window from "../Window/Window";
+import BasicLayout from "../Layouts/Basic/Basic";
 
 
 const Browser = () => {
@@ -15,7 +15,7 @@ const Browser = () => {
             }
             const src = url;
             const response = await getMD(src);
-            if('error' in response){
+            if ('error' in response) {
                 browserViewRef.current!.srcdoc = response.message;
                 return;
             }
@@ -31,12 +31,11 @@ const Browser = () => {
     }, [url]);
 
     return (
-        <Window useClientsideDecorations={false} title="Web Browser" fullHeightContent={true}>
+        <BasicLayout title="Web Browser" topBarCenterSlot={<Omnibox url={url} setUrl={setUrl}></Omnibox>} fullHeight transluscent>
             <div className="browser">
-                <Omnibox url={url} setUrl={setUrl}></Omnibox>
-                <iframe  className="browser-view"  ref={browserViewRef} sandbox="allow-forms allow-same-origin allow-scripts allow-top-navigation allow-popups-to-escape-sandbox allow-popups allow-modals allow-presentation"></iframe>
+                <iframe className="browser-view" ref={browserViewRef} sandbox="allow-forms allow-same-origin allow-scripts allow-top-navigation allow-popups-to-escape-sandbox allow-popups allow-modals allow-presentation"></iframe>
             </div>
-        </Window>
+        </BasicLayout>
     )
 }
 
@@ -51,9 +50,9 @@ async function getMD(src: string) {
         });
     } catch (error) {
         console.error("Fetch failed, is the backend running?", error);
-        return {message: "Not Found", error: error}
+        return { message: "Not Found", error: error }
     }
-    
+
 }
 
 export default Browser;

@@ -1,0 +1,53 @@
+.window-controls{
+    display:inline-flex;
+    gap: 6px;
+}
+
+.window-controls>button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding:0;
+    border:none;
+    height: 14px;
+    width: 14px;
+    border-radius: 7px;
+    transition: filter 0.2s;
+}
+
+.window-controls>button:hover{
+    filter: brightness(0.9);
+}
+
+.window-controls>button:active{
+    filter: brightness(0.8);
+}
+
+.window-controls>.maximize {
+    background-color: rgb(66, 219, 66);
+    border: 1px solid rgba(14, 184, 14, 0.555);
+    .material-symbols-outlined{
+        font-size: 8px;
+    }
+}
+
+.window-controls>.minimize{
+    background-color: rgb(243, 228, 14);
+    border: 1px solid rgba(219, 182, 19, 0.541);
+}
+
+.window-controls>.close{
+    background-color: rgb(238, 46, 46);
+    border: 1px solid rgb(173, 20, 20);
+}
+
+.window-controls .material-symbols-outlined{
+    opacity: 0;
+    font-size: 10px;
+    transition: opacity 0.2s;
+    font-weight: bold;
+}
+
+.window-controls>:hover .material-symbols-outlined{
+    opacity: 0.3;
+}
