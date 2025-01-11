@@ -1,18 +1,18 @@
-import React, { ReactNode, useEffect, useRef, useState, useCallback } from 'react'
-import './style.css'
+import React, { ReactNode, useEffect, useRef, useState, useCallback } from 'react';
+import './style.css';
 import Titlebar from './Titlebar';
 
 const DE_TOPBAR_HEIGHT = 30;
 const RESIZE_HANDLE_PADDING = 5;
 
 interface WindowProps {
-    children?: ReactNode,
-    useClientsideDecorations: boolean,
-    title: string,
-    fullHeightContent?: boolean,
-    className?: string,
-    active?: boolean,
-    onFocused?: () => void
+    children?: ReactNode;
+    useClientsideDecorations: boolean;
+    title: string;
+    fullHeightContent?: boolean;
+    className?: string;
+    active?: boolean;
+    onFocused?: () => void;
 }
 
 const Window = ({ children, useClientsideDecorations: csd, title, fullHeightContent = false, className = "", active = false, onFocused }: WindowProps) => {
@@ -28,11 +28,7 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
 
     const handleResize = (e: React.MouseEvent | React.TouchEvent) => {
         e.preventDefault();
-        if(onFocused){
-            onFocused();
-        }
         setIsResizing(true);
-        //we handle the 8 possibilities for resizing, n e s w ne se nw sw
         const classList = (e.target as HTMLElement).classList;
         if (classList.contains("resize-handle-e")) {
             resizeDirection.current = "e";
@@ -43,15 +39,17 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
         if (classList.contains("resize-handle-se")) {
             resizeDirection.current = 'se';
         }
-    }
+    };
 
     const handleMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
         e.preventDefault();
         const target = e.target as HTMLElement;
         if (target.classList.contains('resize-handle')) {
-            return; // Do not initiate drag if the target is a resize handle
+            return;
         }
-        setIsDragging(true);
+        setIsDragging(target.classList.contains('dragarea'));
+
+        if (onFocused) onFocused();
 
         const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
         const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
@@ -59,8 +57,8 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
         offset.current = {
             x: clientX - x,
             y: clientY - y
-        }
-    }
+        };
+    };
 
     const handleMouseUp = useCallback(() => {
         setIsDragging(false);
@@ -72,6 +70,7 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
         if (isDragging || resizeDirection.current) {
             e.preventDefault();
         }
+        
         const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
         const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
 
@@ -80,8 +79,6 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
             setY(Math.max(-RESIZE_HANDLE_PADDING, clientY - offset.current.y));
         }
         if (resizeDirection.current) {
-            //we need to take into account the DE's top bar in the y axis.
-            //we need to take into account the resize handles' widths.
             switch (resizeDirection.current) {
                 case 'e':
                     setWidth(clientX - x - RESIZE_HANDLE_PADDING);
@@ -109,42 +106,18 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
             document.removeEventListener('mouseup', handleMouseUp);
             document.removeEventListener('touchmove', handleMouseMove);
             document.removeEventListener('touchend', handleMouseUp);
-        }
+        };
     }, [handleMouseMove, handleMouseUp]);
-
 
     useEffect(() => {
         windowRef.current?.classList.toggle("dragging", isDragging || isResizing);
     }, [isDragging, isResizing]);
 
     return (
-        //we add the event on the container to support CSD
-        <div className={(active ? "active" : "") + " window"} ref={windowRef} onMouseDown={handleMouseDown} onTouchStart={handleMouseDown} style={{ width: `${width}px`, height: `${height}px`, top: `${y}px`, left: `${x}px` }}>
-            <div className={className + " window-view"}>
+        <div className={`${active ? "active" : ""} window`} ref={windowRef} onMouseDown={handleMouseDown} onTouchStart={handleMouseDown} style={{ width: `${width}px`, height: `${height}px`, top: `${y}px`, left: `${x}px` }}>
+            <div className={`${className} window-view`}>
                 {!csd && <Titlebar title={title} />}
-                <div
-                    className={`window-content ${fullHeightContent ? 'window-content-fullheight' : ''}`}
-                    onMouseDown={
-                        (e: React.MouseEvent) => {
-                            if (onFocused) {
-                                onFocused();
-                            }
-                            const originator = e.target as HTMLElement
-                            if (!originator.classList.contains('dragarea')) {
-                                e.stopPropagation();
-                            }
-                        }}
-                    onTouchStart={
-                        (e: React.TouchEvent) => {
-                            if (onFocused) {
-                                onFocused();
-                            }
-                            const originator = e.target as HTMLElement
-                            if (!originator.classList.contains('dragarea')) {
-                                e.stopPropagation();
-                            }
-                        }}
-                >
+                <div className={`window-content ${fullHeightContent ? 'window-content-fullheight' : ''}`}>
                     {children}
                 </div>
             </div>
@@ -159,7 +132,7 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
                 <div className="resize-handle resize-handle-sw" />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Window
+export default Window;
