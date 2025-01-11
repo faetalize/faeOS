@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import styles from './style.module.css';
 
 const Toolbar = () => {
     const [time, setTime] = useState(new Date());
@@ -18,7 +19,7 @@ const Toolbar = () => {
     };
 
     return (
-        <div className="de-toolbar">
+        <div className={styles["de-toolbar"]}>
             {formatTime(time)}
         </div>
     );

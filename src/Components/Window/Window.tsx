@@ -19,8 +19,8 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
     const resizeDirection = useRef<string | null>(null);
     const offset = useRef({ x: 0, y: 0 });
     const windowRef = useRef<HTMLDivElement>(null);
-    const [x, setX] = useState(0);
-    const [y, setY] = useState(0);
+    const [x, setX] = useState(window.innerWidth / 2 - 250);
+    const [y, setY] = useState(window.innerHeight / 2 - 200);
     const [width, setWidth] = useState(500);
     const [height, setHeight] = useState(400);
 

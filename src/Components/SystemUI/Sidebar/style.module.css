@@ -1,6 +1,6 @@
 .sidebar {
     width: 250px;
-    transition: width 0.234s cubic-bezier(.54, .51, 0, .96);
+    transition: width 0.245s cubic-bezier(0.31,0.48,0.07,0.95);
     flex-shrink: 0;
 }
 

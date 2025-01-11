@@ -19,7 +19,7 @@ const Omnibox = ({ url, setUrl }: OmniboxProps) => {
         }
     }
     return (
-        <><input type="text" value={inputVal} onChange={handleChange} onKeyDown={handleEnter} /></>
+        <input type="text" value={inputVal} onChange={handleChange} onKeyDown={handleEnter} className="omnibox" />
     )
 }
 
