@@ -28,6 +28,9 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
 
     const handleResize = (e: React.MouseEvent | React.TouchEvent) => {
         e.preventDefault();
+        if(onFocused){
+            onFocused();
+        }
         setIsResizing(true);
         //we handle the 8 possibilities for resizing, n e s w ne se nw sw
         const classList = (e.target as HTMLElement).classList;
