@@ -1,6 +1,13 @@
+import { useContext } from 'react';
+import { runningProcessesContext } from '../../../Contexts/runningProcesses';
+
 import './style.css'
+import { ProcessContext } from '../../../Contexts/processContext';
 
 const WindowControls = () => {
+    const { removeProcess } = useContext(runningProcessesContext);
+    const { id } = useContext(ProcessContext);
+
     return (
         <div className="window-controls">
             <button className="minimize">
@@ -13,7 +20,7 @@ const WindowControls = () => {
                     fullscreen
                 </span>
             </button>
-            <button className="close">
+            <button className="close" onClick={() => removeProcess(id)}>
                 <span className="material-symbols-outlined">
                     close
                 </span>

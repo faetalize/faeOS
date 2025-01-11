@@ -31,7 +31,7 @@ const Browser = () => {
     }, [url]);
 
     return (
-        <BasicLayout title="Web Browser" topBarCenterSlot={<Omnibox url={url} setUrl={setUrl}></Omnibox>} fullHeight transluscent>
+        <BasicLayout topBarCenterSlot={<Omnibox url={url} setUrl={setUrl}></Omnibox>}>
             <div className="browser">
                 <iframe className="browser-view" ref={browserViewRef} sandbox="allow-forms allow-same-origin allow-scripts allow-top-navigation allow-popups-to-escape-sandbox allow-popups allow-modals allow-presentation"></iframe>
             </div>

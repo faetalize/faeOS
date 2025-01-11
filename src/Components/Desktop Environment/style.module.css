@@ -14,7 +14,7 @@
     width: 100%;
     backdrop-filter: blur(24px);
     background-color: rgba(255, 255, 255, 0.747);
-    z-index: 2;
+    z-index: 3;
     height: 30px;
 }
 
@@ -25,6 +25,7 @@
 
 .dock{
     display: flex;
+    overflow:hidden;
     position: absolute;
     backdrop-filter: blur(42px);
     background-color: rgba(252, 252, 252, 0.5);
@@ -37,10 +38,25 @@
     transform: translateX(-50%);
     outline: 1px solid rgba(114, 114, 114, 0.452);
     box-shadow: 0 0px 24px rgba(41, 41, 41, 0.492);
+    z-index: 3;
 }
 
 .icon{
     height: 100%;
+    border-radius: 20px;
+    transition: filter 0.2s, background-color 0.2s;
+}
+
+.icon-highlighted{
+    background-color: rgba(255, 255, 255, 0.664);
+}
+
+.icon:hover{
+    filter: brightness(1.2);
+}
+
+.icon:active{
+    filter: brightness(0.8);
 }
 
 .icon img{

@@ -1,8 +1,9 @@
 import SidebarLayout from '../Layouts/Sidebar Layout/SidebarLayout';
 
+
 const ComponentPlayground = () => {
     return (
-        <SidebarLayout title="Component Playground" fullHeight>
+        <SidebarLayout>
             <div className="component-playground-content">
                 <h2>This is the component playground</h2>
                 <p>This app has been created with <code>Window.useClientsideDecorations = true</code><br></br>

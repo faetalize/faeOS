@@ -11,9 +11,11 @@ interface WindowProps {
     title: string,
     fullHeightContent?: boolean,
     className?: string,
+    active?: boolean,
+    onFocused?: () => void
 }
 
-const Window = ({ children, useClientsideDecorations: csd, title, fullHeightContent = false, className = ""}: WindowProps) => {
+const Window = ({ children, useClientsideDecorations: csd, title, fullHeightContent = false, className = "", active = false, onFocused }: WindowProps) => {
     const [isDragging, setIsDragging] = useState(false);
     const [isResizing, setIsResizing] = useState(false);
     const resizeDirection = useRef<string | null>(null);
@@ -114,13 +116,16 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
 
     return (
         //we add the event on the container to support CSD
-        <div className="window" ref={windowRef} onMouseDown={handleMouseDown} onTouchStart={handleMouseDown} style={{ width: `${width}px`, height: `${height}px`, top: `${y}px`, left: `${x}px` }}>
+        <div className={(active ? "active" : "") + " window"} ref={windowRef} onMouseDown={handleMouseDown} onTouchStart={handleMouseDown} style={{ width: `${width}px`, height: `${height}px`, top: `${y}px`, left: `${x}px` }}>
             <div className={className + " window-view"}>
-                {!csd  && <Titlebar title={title} />}
+                {!csd && <Titlebar title={title} />}
                 <div
                     className={`window-content ${fullHeightContent ? 'window-content-fullheight' : ''}`}
                     onMouseDown={
                         (e: React.MouseEvent) => {
+                            if (onFocused) {
+                                onFocused();
+                            }
                             const originator = e.target as HTMLElement
                             if (!originator.classList.contains('dragarea')) {
                                 e.stopPropagation();
@@ -128,6 +133,9 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
                         }}
                     onTouchStart={
                         (e: React.TouchEvent) => {
+                            if (onFocused) {
+                                onFocused();
+                            }
                             const originator = e.target as HTMLElement
                             if (!originator.classList.contains('dragarea')) {
                                 e.stopPropagation();
