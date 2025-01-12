@@ -43,13 +43,13 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
 
     const handleMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
         e.preventDefault();
+        if (onFocused) onFocused();
         const target = e.target as HTMLElement;
+        //if the target is a resize handle, we return to let the handleResize function handle it
         if (target.classList.contains('resize-handle')) {
             return;
         }
         setIsDragging(target.classList.contains('dragarea'));
-
-        if (onFocused) onFocused();
 
         const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
         const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
@@ -71,11 +71,14 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
             e.preventDefault();
         }
         
+        //different handling depending on whether the event is a touch event or mouse event
         const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
         const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
 
         if (isDragging) {
             setX(clientX - offset.current.x);
+            //we don't want the window to be dragged above the topbar
+            //we also substract the padding caused by the resize handles of the window
             setY(Math.max(-RESIZE_HANDLE_PADDING, clientY - offset.current.y));
         }
         if (resizeDirection.current) {
@@ -96,6 +99,9 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
         }
     }, [x, y, isDragging]);
 
+    //we add the event listeners to the document so that we the window will follow 
+    // the cursor during dragging and resizing, even if the mouse leaves the 
+    // target window due to fast movement
     useEffect(() => {
         document.addEventListener('mousemove', handleMouseMove);
         document.addEventListener('mouseup', handleMouseUp);
@@ -109,6 +115,9 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
         };
     }, [handleMouseMove, handleMouseUp]);
 
+    //we have to add the dragging class to prevent any iframes from stealing mouse events
+    //this class disables pointer events on the iframe only when dragging or resizing, then
+    //reenables them when the dragging or resizing is done by removing the class
     useEffect(() => {
         windowRef.current?.classList.toggle("dragging", isDragging || isResizing);
     }, [isDragging, isResizing]);

@@ -9,17 +9,18 @@ import Window from '../Window/Window';
 
 const DesktopEnvironment = () => {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
+    const [dockVisible, setDockVisible] = useState(true);
     const { processes, addProcess } = useContext(runningProcessesContext);
     const allApps = useContext(allAppsContext);
     const desktopEnvironment = useRef<HTMLDivElement>(null);
+    const dockRef = useRef<HTMLDivElement>(null);
 
-    
+
     const openProcess = (appName: string) => {
         const app = allApps.find(app => app.appName === appName);
         if (!app) return;
         addProcess(app);
-    }
-
+    };
 
     // when a new window is added, set it as active
     useEffect(() => {
@@ -43,7 +44,7 @@ const DesktopEnvironment = () => {
                     </Suspense>
                 ))}
             </div>
-            <Dock activeIndex={activeIndex} onEntryClick={openProcess} />
+            {dockVisible && <Dock ref={dockRef} activeIndex={activeIndex} onEntryClick={openProcess} />}
         </div>
     );
 }
