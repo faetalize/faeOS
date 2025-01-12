@@ -8,19 +8,17 @@ interface OmniboxProps {
 const Omnibox = ({ url, setUrl }: OmniboxProps) => {
     const [inputVal, setInputVal] = useState(url);
 
-    function handleChange(event: ChangeEvent<HTMLInputElement>) {
-        setInputVal(event.target.value);
-    }
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => setInputVal(event.target.value);
 
-    function handleEnter(event: KeyboardEvent<HTMLInputElement>) {
+    const handleEnter = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            const newUrl = inputVal + `?refresh=${new Date().getTime()}`;
-            setUrl(newUrl);
+            setUrl(`${inputVal}?refresh=${new Date().getTime()}`);
         }
-    }
+    };
+
     return (
         <input type="text" value={inputVal} onChange={handleChange} onKeyDown={handleEnter} className="omnibox" />
-    )
+    );
 }
 
 export default Omnibox;
