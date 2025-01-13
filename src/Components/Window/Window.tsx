@@ -42,7 +42,6 @@ const Window = ({ children, useClientsideDecorations: csd, title, fullHeightCont
     };
 
     const handleMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
-        e.preventDefault();
         if (onFocused) onFocused();
         const target = e.target as HTMLElement;
         //if the target is a resize handle, we return to let the handleResize function handle it

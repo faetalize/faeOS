@@ -6,8 +6,8 @@ interface TitlebarProps {
 
 const Titlebar = ({title} : TitlebarProps) => {
     return (
-        <div className="titlebar" >
-            <span>{title}</span>
+        <div className="titlebar dragarea" >
+            <span className="dragarea">{title}</span>
             <WindowControls></WindowControls>
         </div>
     )
