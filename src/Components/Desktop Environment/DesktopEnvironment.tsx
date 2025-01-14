@@ -9,7 +9,7 @@ import Window from '../Window/Window';
 
 const DesktopEnvironment = () => {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
-    const [dockVisible, setDockVisible] = useState(true);
+    const [dockVisible] = useState(true);
     const { processes, addProcess } = useContext(runningProcessesContext);
     const allApps = useContext(allAppsContext);
     const desktopEnvironment = useRef<HTMLDivElement>(null);
