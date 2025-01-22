@@ -2,6 +2,7 @@ import Omnibox from "./Omnibox";
 import { useEffect, useRef, useState } from 'react';
 import './style.css'
 import BasicLayout from "../Layouts/Basic/Basic";
+import BrowserControls from "./BrowserControls";
 
 
 const Browser = () => {
@@ -31,7 +32,7 @@ const Browser = () => {
     }, [url]);
 
     return (
-        <BasicLayout topBarCenterSlot={<Omnibox url={url} setUrl={setUrl}></Omnibox>}>
+        <BasicLayout topBarStartSlot={<BrowserControls></BrowserControls>} topBarCenterSlot={<Omnibox url={url} setUrl={setUrl}></Omnibox>}>
             <div className="browser">
                 <iframe className="browser-view" ref={browserViewRef} sandbox="allow-forms allow-same-origin allow-scripts allow-top-navigation allow-popups-to-escape-sandbox allow-popups allow-modals allow-presentation"></iframe>
             </div>
