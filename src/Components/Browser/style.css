@@ -13,3 +13,28 @@
 .omnibox{
     width: 100%;
 }
+
+:has(>.omnibox){
+    flex-grow: 1;
+}
+
+.browser-controls{
+    height: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.browser-controls > *{
+    font-size: 1rem;
+}
+
+.browser-controls > button{
+    padding: 0.4rem;
+    background-color: transparent;
+    border: none;
+}
+
+.browser-controls > button:not(:disabled):hover{
+    background-color: rgba(0, 0, 0, 0.096);
+}
