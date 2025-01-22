@@ -5,6 +5,7 @@
     align-items: center;
     padding: 1rem;
     box-sizing: border-box;
+    gap: 1rem;
 }
 
 .slot-start{
@@ -12,7 +13,6 @@
 }
 
 .slot-center{
-    width: 50%;
 }
 
 .slot-end{
