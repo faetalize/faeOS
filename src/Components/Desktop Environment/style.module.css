@@ -4,6 +4,7 @@
     background-color: rgb(157, 209, 255);
     background-image: url("https://wallpapercave.com/wp/wp9990649.jpg");
     background-size: cover;
+    background-position: center;
     height: 100%;
     width: 100%;
 }
@@ -25,6 +26,8 @@
 
 .dock{
     display: flex;
+    gap: 4px;
+    align-items: center;
     overflow:hidden;
     position: absolute;
     backdrop-filter: blur(42px);
@@ -32,7 +35,7 @@
     height: 70px;
     border-radius: 20px;
     transition: width 0.24s cubic-bezier(0.31,0.48,0.07,0.95);
-    box-sizing: border-box;
+    box-sizing: content-box;
     bottom: 12px;
     left: 50%;
     transform: translateX(-50%);
@@ -42,13 +45,19 @@
 }
 
 .icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100%;
+    width: 70px;
     border-radius: 20px;
-    transition: filter 0.2s, background-color 0.2s;
+    background-color: rgba(255, 255, 255, 0);
+    transition: filter 0.2s, background-color 0.3s;
+    padding: 4px;
 }
 
-.icon-highlighted{
-    background-color: rgba(255, 255, 255, 0.664);
+.icon-focused{
+    background-color: rgba(255, 255, 255, 0.445);
 }
 
 .icon:hover{
@@ -61,4 +70,24 @@
 
 .icon img{
     height: 100%
+}
+
+.icon-indicator{
+    position: absolute;
+    bottom: 3px;
+    border-radius: 20px;
+    width: 0px;
+    height: 4px;
+    transition: width 0.2s;
+    z-index: 2;
+}
+
+.icon-highlighted .icon-indicator{
+    width: 10px;
+    background-color: rgba(56, 56, 56, 0.623);
+}
+
+.icon-focused .icon-indicator{
+    width: 23px;
+    background-color: rgba(8, 141, 194, 0.623);
 }
