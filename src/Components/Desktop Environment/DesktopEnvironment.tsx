@@ -6,6 +6,8 @@ import { allAppsContext } from '../../Contexts/allApps';
 import { runningProcessesContext } from '../../Contexts/runningProcesses';
 import { ProcessProvider } from '../../Contexts/processContext';
 import Window from '../Window/Window';
+import * as htmlToImage from 'html-to-image';
+import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 
 const DesktopEnvironment = () => {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -14,6 +16,7 @@ const DesktopEnvironment = () => {
     const allApps = useContext(allAppsContext);
     const desktopEnvironment = useRef<HTMLDivElement>(null);
     const dockRef = useRef<HTMLDivElement>(null);
+    const [thumbUrls, setThumbUrls] = useState<string[]>([]);
 
 
     const openProcess = (appName: string) => {
@@ -21,6 +24,11 @@ const DesktopEnvironment = () => {
         if (!app) return;
         addProcess(app);
     };
+
+    useEffect(() => {
+
+    }, [activeIndex]);
+
 
     // when a new window is added, set it as active
     useEffect(() => {
@@ -44,7 +52,7 @@ const DesktopEnvironment = () => {
                     </Suspense>
                 ))}
             </div>
-            {dockVisible && <Dock ref={dockRef} activeIndex={activeIndex} onEntryClick={openProcess} />}
+            {dockVisible && <Dock ref={dockRef} activeIndex={activeIndex} onEntryClick={openProcess} thumbs={thumbUrls} />}
         </div>
     );
 }
