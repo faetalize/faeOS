@@ -3,7 +3,35 @@ import SidebarLayout from '../Layouts/Sidebar Layout/SidebarLayout';
 
 const ComponentPlayground = () => {
     return (
-        <SidebarLayout>
+        <SidebarLayout
+            sidebarSlotTop={
+                <div className="sidebar-nav">
+                    <h3>Component Playground</h3>
+                    <nav>
+                        <a href="#basics">Basics</a>
+                        <a href="#inputs">Inputs</a>
+                        <a href="#surfaces">Surfaces</a>
+                    </nav>
+                </div>
+            }
+            sidebarSlotMain={
+                <div className="component-categories">
+                    <ul>
+                        <li>Buttons</li>
+                        <li>Text Inputs</li>
+                        <li>Surfaces</li>
+                        <li>Typography</li>
+                        <li>Layouts</li>
+                    </ul>
+                </div>
+            }
+            sidebarSlotBottom={
+                <div className="sidebar-footer">
+                    <p>Component Playground v1.0</p>
+                    <small>Click on components to view details</small>
+                </div>
+            }
+        >
             <div className="component-playground-content">
                 <h2>This is the component playground</h2>
                 <p>This app has been created with <code>Window.useClientsideDecorations = true</code><br></br>

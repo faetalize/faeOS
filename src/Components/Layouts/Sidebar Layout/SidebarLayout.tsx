@@ -7,6 +7,9 @@ interface SidebarLayoutProps {
     children?: ReactNode,
     topBarStartSlot?: ReactNode,
     topBarCenterSlot?: ReactNode,
+    sidebarSlotTop?: ReactNode,
+    sidebarSlotMain?: ReactNode,
+    sidebarSlotBottom?: ReactNode,
 }
 
 const SidebarLayout = ({ children, ...props }: SidebarLayoutProps) => {
@@ -31,7 +34,12 @@ const SidebarLayout = ({ children, ...props }: SidebarLayoutProps) => {
 
     return (
         <div ref={containerRef} className={styles['container']}>
-            <Sidebar collapsed={isCollapsed}></Sidebar>
+            <Sidebar 
+                collapsed={isCollapsed}
+                sidebarSlotTop={props.sidebarSlotTop}
+                sidebarSlotMain={props.sidebarSlotMain}
+                sidebarSlotBottom={props.sidebarSlotBottom}
+            />
             <div className={`${styles['fill']} ${styles['main-panel']}`}>
                 <DragArea startSlot={props.topBarStartSlot} centerSlot={props.topBarCenterSlot}></DragArea>
                 <div className={styles['content']}>{children}</div>

@@ -10,6 +10,14 @@ const Browser = () => {
     const [url, setUrl] = useState("");
 
     useEffect(() => {
+        if (!browserViewRef.current) {
+            return;
+        }
+        //set some styles on the iframe
+        browserViewRef.current.srcdoc = `<style>
+            *{
+                scrollbar-width: thin;}
+        </style>`;
         (async () => {
             if (!url) {
                 return;
@@ -26,7 +34,7 @@ const Browser = () => {
             const baseElement = document.createElement('base');
             baseElement.href = src;
             targetdocument.head.insertBefore(baseElement, targetdocument.head.firstChild);
-            browserViewRef.current!.srcdoc = targetdocument.documentElement.outerHTML;
+            browserViewRef.current!.srcdoc += targetdocument.documentElement.outerHTML;
         }
         )();
     }, [url]);

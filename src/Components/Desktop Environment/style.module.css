@@ -14,9 +14,56 @@
     align-items: center;
     width: 100%;
     backdrop-filter: blur(24px);
-    background-color: rgba(255, 255, 255, 0.747);
+    gap: 1rem;
+    background-color: rgba(255, 255, 255, 0.829);
     z-index: 3;
     height: 30px;
+    padding-inline: 0.5rem;
+}
+
+.de-toolbar * {
+    font-size: 0.85rem !important;
+}
+
+.de-toolbar button {
+    text-align: center;
+    text-justify: center;
+    filter: drop-shadow(0 1px 0.5px rgba(0, 0, 0, 0.37));
+    padding-inline: 0.75rem;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+}
+
+.de-toolbar button:hover {
+    filter: drop-shadow(0 1px 0.5px rgba(0, 0, 0, 0.37));
+    background-color: rgba(102, 102, 102, 0.164);
+}
+
+.de-toolbar button:active {
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.37));
+    background-color: rgba(77, 77, 77, 0.281);
+}
+
+.de-toolbar-free-space {
+    flex-grow: 1;
+}
+
+.de-toolbar-menubar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.de-toolbar-quicksettings {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.de-toolbar-quicksettings * {
+    font-size: 1rem !important;
 }
 
 .de-window-container {
@@ -24,17 +71,17 @@
     flex-grow: 1;
 }
 
-.dock{
+.dock {
     display: flex;
     gap: 4px;
     align-items: center;
-    overflow:hidden;
+    overflow: hidden;
     position: absolute;
     backdrop-filter: blur(42px);
     background-color: rgba(252, 252, 252, 0.5);
     height: 70px;
     border-radius: 20px;
-    transition: width 0.24s cubic-bezier(0.31,0.48,0.07,0.95);
+    transition: width 0.24s cubic-bezier(0.31, 0.48, 0.07, 0.95);
     box-sizing: content-box;
     bottom: 12px;
     left: 50%;
@@ -44,7 +91,7 @@
     z-index: 3;
 }
 
-.icon{
+.icon {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -56,23 +103,23 @@
     padding: 4px;
 }
 
-.icon-focused{
+.icon-focused {
     background-color: rgba(255, 255, 255, 0.445);
 }
 
-.icon:hover{
+.icon:hover {
     filter: brightness(1.2);
 }
 
-.icon:active{
+.icon:active {
     filter: brightness(0.8);
 }
 
-.icon img{
+.icon img {
     height: 100%
 }
 
-.icon-indicator{
+.icon-indicator {
     position: absolute;
     bottom: 3px;
     border-radius: 20px;
@@ -82,12 +129,12 @@
     z-index: 2;
 }
 
-.icon-highlighted .icon-indicator{
+.icon-highlighted .icon-indicator {
     width: 10px;
     background-color: rgba(56, 56, 56, 0.623);
 }
 
-.icon-focused .icon-indicator{
+.icon-focused .icon-indicator {
     width: 23px;
     background-color: rgba(8, 141, 194, 0.623);
 }
