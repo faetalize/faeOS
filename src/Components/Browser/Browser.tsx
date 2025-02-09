@@ -40,7 +40,7 @@ const Browser = () => {
     }, [url]);
 
     return (
-        <BasicLayout topBarStartSlot={<BrowserControls></BrowserControls>} topBarCenterSlot={<Omnibox url={url} setUrl={setUrl}></Omnibox>}>
+        <BasicLayout topBarStartSlot={<BrowserControls goBack={() => {}} goForward={() => {}} reload={() => {}}></BrowserControls>} topBarCenterSlot={<Omnibox url={url} setUrl={setUrl}></Omnibox>}>
             <div className="browser">
                 <iframe className="browser-view" ref={browserViewRef} sandbox="allow-forms allow-same-origin allow-scripts allow-top-navigation allow-popups-to-escape-sandbox allow-popups allow-modals allow-presentation"></iframe>
             </div>
