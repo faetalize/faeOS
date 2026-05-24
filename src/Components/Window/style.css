@@ -12,8 +12,8 @@
 .window {
     position: absolute;
     z-index: 0;
-    min-height: 400px;
-    min-width: 500px;
+    min-height: 100px;
+    min-width: 150px;
     padding: 5px;
 }
 

@@ -30,7 +30,7 @@ button {
 
 button {
     padding: 0.5rem;
-    border-radius: 1rem;
+    border-radius: 0.4rem;
     background-color: rgb(224, 224, 224);
     border: 1px solid rgba(0, 0, 0, 0.384);
     transition: filter 0.2s;

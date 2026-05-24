@@ -20,6 +20,10 @@
     width: 100%;
 }
 
+.mobile {
+    flex-direction: column-reverse;
+}
+
 @container (max-width: 768px) {
     .sidebar {
         display: none;
